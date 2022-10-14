@@ -1,0 +1,11 @@
+localhost:
+  dialect: mysql
+  datasource: root:secret@tcp(127.0.0.1:3306)/ec_shop?parseTime=true
+  dir: migrations/
+  table: migrations
+development:
+  dialect: mysql
+  # datasource: ${MYSQL_USER}:${MYSQL_PASSWORD}@tcp(127.0.0.1:3306)/ec_shop?parseTime=true
+  datasource: root:$hsipl@tcp(35.221.240.134:3306)/ec_shop?parseTime=true
+  dir: migrations
+  table: migrations

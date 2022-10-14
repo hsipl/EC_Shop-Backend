@@ -3,19 +3,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { IndexModule } from './module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'db',
     port: 3306,
-    username: 'hsipl_ec_shop',
-    password: 'hsipl_ec_shop',
-    database: 'hsipl_ec',
+    username: 'root',
+    password: 'secret',
+    database: 'ec_shop',
     entities: [join(__dirname, '**', '*.entity.{ts,js}')],
     autoLoadEntities: true,
     synchronize: true,
-  })],
+  }), IndexModule],
   controllers: [AppController],
   providers: [AppService],
 })

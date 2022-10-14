@@ -9,10 +9,9 @@ services:
     security_opt:
       - seccomp:unconfined
     environment:
-      MYSQL_USER: hsipl_ec_shop
-      MYSQL_PASSWORD: hsipl_ec_shop
-      MYSQL_ROOT_PASSWORD: hsipl_ec_shop
-      MYSQL_DATABASE: hsipl_ec
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: ec_shop
       TZ: Asia/Taipei
     volumes:
       - mysql_data:/var/lib/mysql

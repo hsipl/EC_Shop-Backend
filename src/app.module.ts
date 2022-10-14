@@ -7,10 +7,10 @@ import { AppService } from './app.service';
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'mysql',
-    host: 'localhost',
+    host: 'db',
     port: 3306,
-    username: 'root',
-    password: 'Qweasdzxc487',
+    username: 'hsipl_ec_shop',
+    password: 'hsipl_ec_shop',
     database: 'hsipl_ec',
     entities: [join(__dirname, '**', '*.entity.{ts,js}')],
     autoLoadEntities: true,

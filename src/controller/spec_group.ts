@@ -10,4 +10,5 @@ export class SpecGroupController {
         const data = await this.specGroupService.findAll();
         res.status(HttpStatus.OK).json(data)
     }
+    
 }

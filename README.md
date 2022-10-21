@@ -2,6 +2,9 @@
 
 [![Types: Typescript](https://img.shields.io/badge/Types-Typescript-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 
+## Quick Start For Development
+### For Backend Developers
+
 ```sh
 # clone repo
 git clone https://github.com/hsipl/EC_Shop-Backend.git

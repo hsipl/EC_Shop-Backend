@@ -3,5 +3,5 @@ export interface IRepository<T, U> {
     findOne(id: number): Promise<T>;
     create(data: U): Promise<T>;
     update(id: number, data: U): Promise<boolean>;
-    remove(id: number, data: U): Promise<boolean>;
+    remove(id: number): Promise<boolean>;
 }

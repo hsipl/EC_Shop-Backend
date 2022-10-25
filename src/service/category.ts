@@ -18,23 +18,27 @@ export class CategoryService implements IRepository<Category, CategoryDto> {
     }
 
     async create(data: CategoryDto): Promise<Category> {
-        return await this.categoryRepository.save(data);
+        const category: Category = new Category()
+        Object.assign(category, data);
+        return await this.categoryRepository.save(category);
     }
-
+    // 更新錯誤
     async update(id: number, data: CategoryDto): Promise<boolean> {
         const foundCategory = await this.categoryRepository.findOne({ where: { id } });
         if (!foundCategory) {
             return false;
         }
-        return (this.categoryRepository.update(id, data)) ? true : false;
+        const category: Category = new Category()
+        Object.assign(category, data);
+        return await (this.categoryRepository.update(id, category)) ? true : false;
     }
 
-    async remove(id: number, data: CategoryDto): Promise<boolean> {
+    async remove(id: number): Promise<boolean> {
         const foundCategory = await this.categoryRepository.findOne({ where: { id } });
         if (!foundCategory) {
             return false;
         }
-        data.status = 1;
-        return (this.categoryRepository.update(id, data)) ? true : false;
+        foundCategory.status = 1;
+        return await (this.categoryRepository.update(id, foundCategory)) ? true : false;
     }
 }

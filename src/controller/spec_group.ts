@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Response, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Response, HttpStatus } from '@nestjs/common';
 import { SpecGroupService } from 'src/service/spec_group';
 
 @Controller('specgroup')
@@ -10,5 +10,5 @@ export class SpecGroupController {
         const data = await this.specGroupService.findAll();
         res.status(HttpStatus.OK).json(data)
     }
-    
+
 }

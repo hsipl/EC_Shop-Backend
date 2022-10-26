@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Response, HttpStatus, Param, Body, Patch, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Response, HttpStatus, Param, Body, Delete, Put } from '@nestjs/common';
 import { CategoryDto } from 'src/dto/category';
 import { CategoryService } from 'src/service/category';
 

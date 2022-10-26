@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Response, HttpStatus, Param, Body, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Response, HttpStatus, Param, Body, Patch, Delete, Put } from '@nestjs/common';
 import { CategoryDto } from 'src/dto/category';
 import { CategoryService } from 'src/service/category';
 
@@ -30,10 +30,10 @@ export class CategoryController {
         res.status(HttpStatus.OK).json()
     }
 
-    @Patch()
-    async update(@Param('id') id: number, @Body() categoryDTO: CategoryDto, @Response() res) {
+    @Put()
+    async update(@Body() categoryDTO: CategoryDto, @Response() res) {
         try {
-            const isUpdate = this.categoryService.update(id, categoryDTO);
+            const isUpdate = this.categoryService.update(categoryDTO.id, categoryDTO);
             res.status(HttpStatus.OK).json({ status: isUpdate ? 'success' : 'fail' });
         } catch (error) {
             res.status(HttpStatus.INTERNAL_SERVER_ERROR);

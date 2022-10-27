@@ -1,16 +1,29 @@
-import {IsString, IsOptional, IsNotEmpty, IsNumber, Length, IsEmail, IsPhoneNumber, } from 'class-validator'
+import {IsString, IsOptional, IsNotEmpty, IsNumber, MinLength, IsEmail, } from 'class-validator'
 
 export class CreateUserDTO{
     @IsString()
     @IsNotEmpty()
     name: string
+
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(6,{
+        message: 'Password length need longer than 6'
+    })
     password: string
+
+    @IsString()
+    @IsNotEmpty()
     region: string
+ 
     
-    
+    @IsString()
+    @IsNotEmpty()
     @IsEmail()
     mail: string
 
-    @IsPhoneNumber()
+
+    @IsString()
+    @IsNotEmpty()
     phone_num: string
 }

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm'
 import { User } from 'src/entity/user.entity'
 import{ CreateUserDTO} from '../dto/create-user.dto'
 import {UpdateUserDTO} from '../dto/update-user.dto'
+import {encryptionService} from './user_encryption' 
 
 @Injectable()
 export class UserService{
@@ -13,7 +14,7 @@ export class UserService{
         ) {}
 
         async createUser(createUserDTO: CreateUserDTO) :Promise<User>{
-        return this.userRepository.save(createUserDTO)
+            return this.userRepository.save(createUserDTO)
         }
 
         async findAllUser() : Promise<User[]>{
@@ -22,17 +23,12 @@ export class UserService{
 
         async findUserById (id: number): Promise <User | undefined>{
             let user: User
-            try{
+        
                 user = await this.userRepository.findOneBy({id})
                 if(!user){
                     throw new HttpException('user not found', HttpStatus.BAD_REQUEST)
                 }
-                }
-
-            catch(err){
-                throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR)
                 
-            }
             return user
         }
 
@@ -41,9 +37,8 @@ export class UserService{
             const foundUser = await this.userRepository.findOneBy({id})
 
             if(!foundUser){
-                throw new HttpException('user not found', 404)
+                throw new HttpException('user not found', HttpStatus.NOT_FOUND)
             }
-
             return (await this.userRepository.save({
                 ...foundUser,
                 ...updateUserDTO,
@@ -56,7 +51,7 @@ export class UserService{
             const foundUser = await this.userRepository.findOneBy({id})
 
             if(!foundUser){
-                throw new HttpException('user not found',404)
+                throw new HttpException('user not found', HttpStatus.NOT_FOUND)
             }
             return (await this.userRepository.delete(id)) ?true :false
         }

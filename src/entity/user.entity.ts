@@ -21,10 +21,10 @@ export class User{
     @Column()
     region: string
 
-    @Column()
+    @Column({unique: true})
     mail: string
 
-    @Column()
+    @Column({unique: true})
     phone_num: string
 
     @Column()

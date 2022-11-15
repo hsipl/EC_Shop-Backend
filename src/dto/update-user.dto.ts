@@ -3,7 +3,7 @@ import {IsString, IsOptional, IsNotEmpty, isNotEmpty, IsEmail, MinLength} from '
 export class UpdateUserDTO{
     @IsString()
     @IsNotEmpty()
-    name: string
+    username: string
 
     @IsString()
     @IsNotEmpty()

@@ -55,7 +55,7 @@ import {
       try{
         await this.userService.createUser(createUserDTO)
         res.status(HttpStatus.OK).send({
-          message: `Created user ${createUserDTO.name} sucessfully!`
+          message: `Created user ${createUserDTO.username} sucessfully!`
         })
       }
   

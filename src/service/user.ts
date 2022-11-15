@@ -15,9 +15,10 @@ export class UserService{
         ) {}
 
         async createUser(createUserDTO: CreateUserDTO) :Promise<User>{
-            const {mail, phone_num } = createUserDTO
+            const {username ,mail, phone_num } = createUserDTO
             const existUser = await this.userRepository.findOne({
                 where: {
+                    username: username,
                     mail: mail,
                     phone_num: phone_num
                 }
@@ -25,9 +26,6 @@ export class UserService{
             })
             if (existUser){
                 throw new HttpException('User already exist', HttpStatus.BAD_REQUEST)
-            }
-            if(createUserDTO.password !== createUserDTO.password2){
-                throw new HttpException('password need the same', HttpStatus.BAD_REQUEST)
             }
             createUserDTO.password = await encryptionService.generateHash(createUserDTO.password)
             const newUser = await this.userRepository.create(createUserDTO)
@@ -66,17 +64,18 @@ export class UserService{
 
         async updateUser(id: number, updateUserDTO: UpdateUserDTO): Promise<boolean>{
             const foundUser = await this.userRepository.findOneBy({id})
-            console.log(foundUser)
 
             if(!foundUser){
                 throw new HttpException('user not found', HttpStatus.NOT_FOUND)
             }
+
+            // const checkPassowrd = await encryptionService.comparePassword(foundUser.password, updateUserDTO.password)
+            // if (checkPassowrd == true){
+            //     throw new HttpException('Password need different', HttpStatus.INTERNAL_SERVER_ERROR)
+            // }
+            
+            // console.log(checkPassowrd)
         
-          
-            if(encryptionService.comparePassword(foundUser.password, updateUserDTO.password)){
-                console.log(foundUser.password, updateUserDTO.password)
-                throw new HttpException('Password need different', HttpStatus.INTERNAL_SERVER_ERROR)
-            }
             updateUserDTO.password = await encryptionService.generateHash(updateUserDTO.password)
             
             const updateUser = await this.userRepository.update(id, updateUserDTO)

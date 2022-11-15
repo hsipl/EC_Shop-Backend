@@ -3,9 +3,12 @@ import {
     PrimaryGeneratedColumn,
     Column,
     CreateDateColumn,
-    UpdateDateColumn
+    UpdateDateColumn,
+    DeleteDateColumn,
+    BeforeInsert
     
 } from 'typeorm'
+import { Exclude } from 'class-transformer'
 
 @Entity()
 export class User{
@@ -15,24 +18,28 @@ export class User{
     @Column()
     name: string
 
+    @Exclude()
     @Column()
     password: string
 
     @Column()
     region: string
 
-    @Column({unique: true})
+    @Column()
     mail: string
 
-    @Column({unique: true})
-    phone_num: string
-
     @Column()
-    status: number
+    phone_num: string
 
     @CreateDateColumn({ name: 'createdAt' })
     createdAt: Date;
   
     @UpdateDateColumn({ name: 'updatedAt' })
     updatedAt: Date;
+
+    @DeleteDateColumn({name: 'deleteAt'})
+    deletedAt: Date
+
+
+    
 }

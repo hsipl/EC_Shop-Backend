@@ -4,15 +4,23 @@ export class UpdateUserDTO{
     @IsString()
     @IsNotEmpty()
     name: string
+
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(6,{
+        message: 'Password length need longer than 6'
+    })
     password: string
+
+    
+    @IsString()
+    @IsNotEmpty()
     region: string
+ 
     
     @IsString()
     @IsNotEmpty()
     @IsEmail()
-    @MinLength(6,{
-        message: 'Length need longer than 6'
-    })
     mail: string
 
 

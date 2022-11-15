@@ -9,19 +9,47 @@ import {
     Delete,
     Post,
     UsePipes,
-    ValidationPipe
+    ValidationPipe,
+    UseInterceptors,
+    ClassSerializerInterceptor,
+    UseGuards,
+    Request
+  
   } from '@nestjs/common';
   import { UserService } from '../service/user';
   import { CreateUserDTO } from '../dto/create-user.dto';
   import { UpdateUserDTO } from '../dto/update-user.dto';
-
+  import { AuthGuard } from '@nestjs/passport';
+  import { AuthService } from 'src/service/user_auth';
 
   
   @Controller('user') //set route
   @UsePipes(ValidationPipe)
-  export class UserController {
-    constructor(private userService: UserService) {}
-  
+    export class UserController {
+    constructor(
+      private userService: UserService,
+      private authService: AuthService) {}
+
+    @Post('/login')  
+    async login (@Request() req, @Response() res){
+      try{
+        const {name, password} = req.body
+        const checkAccount = await this.authService.validateUser(name, password)
+        if(checkAccount !== true){
+          res.send("error")
+        }
+        
+        const access_token = await this.authService.createToken(req.body)
+        return res.status(HttpStatus.OK).send(access_token)
+        }  
+
+        catch(err){
+          console.log(err)
+          res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err)
+        }
+      }
+
+    //@UseGuards(AuthGuard('jwt'))  
     @Post()
     async createUser(@Body() createUserDTO: CreateUserDTO, @Response() res) {
       try{
@@ -63,7 +91,7 @@ import {
   
       }
     }
-  
+    //@UseGuards(AuthGuard('local'))  
     @Patch('/:id')
     async updateUser(
       @Response() res,
@@ -82,7 +110,7 @@ import {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err)
       }
     }
-  
+    //@UseGuards(AuthGuard('local'))  
     @Delete('/:id')
     async deleteUser(@Response() res, @Param('id') id){
       try{

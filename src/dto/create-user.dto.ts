@@ -14,6 +14,10 @@ export class CreateUserDTO{
 
     @IsString()
     @IsNotEmpty()
+    password2: string
+
+    @IsString()
+    @IsNotEmpty()
     region: string
  
     

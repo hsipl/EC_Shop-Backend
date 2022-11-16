@@ -1,14 +1,14 @@
 import { encryptionService } from "./user_encryption";
-import { BadRequestException, HttpException, Injectable, HttpStatus  } from "@nestjs/common";
-import { UserService } from "./user";
-import * as jwt from 'jsonwebtoken'
+import { HttpException, Injectable, HttpStatus  } from "@nestjs/common";
+import { UserService } from "../service/user";
+import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class AuthService {
-    constructor (private readonly userService: UserService ){}
+    constructor (private readonly userService: UserService, private readonly jwtService: JwtService ){}
 
-    async validateUser(name: string, password: string): Promise<any>{
-            const user = await this.userService.findOneByOption({name})
+    async validateUser(username: string, password: string): Promise<any>{
+            const user = await this.userService.findOneByOption({username})
             if(!user) {
                 throw new HttpException('user not found', HttpStatus.NOT_FOUND)
             }
@@ -22,15 +22,13 @@ export class AuthService {
     }
 
     public async createToken (user: any){
-        const expiresIn = '1d'
-        const secrect = 'secrect'
         const payload = {
-            name: user.name,
+            username: user.username,
             sub: user.id
         }
-        const token  = jwt.sign(payload, secrect, {expiresIn})
+        const token  = this.jwtService.sign(payload)
         return {
-            expires_in: expiresIn,
+            message: 'Login sucessfully',
             token: token
         }
         

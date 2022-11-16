@@ -10,8 +10,6 @@ import {
     Post,
     UsePipes,
     ValidationPipe,
-    UseInterceptors,
-    ClassSerializerInterceptor,
     UseGuards,
     Request
   
@@ -20,36 +18,16 @@ import {
   import { CreateUserDTO } from '../dto/create-user.dto';
   import { UpdateUserDTO } from '../dto/update-user.dto';
   import { AuthGuard } from '@nestjs/passport';
-  import { AuthService } from 'src/service/user_auth';
+
 
   
   @Controller('user') //set route
   @UsePipes(ValidationPipe)
     export class UserController {
     constructor(
-      private userService: UserService,
-      private authService: AuthService) {}
+      private userService: UserService) {}
 
-    @Post('/login')  
-    async login (@Request() req, @Response() res){
-      try{
-        const {name, password} = req.body
-        const checkAccount = await this.authService.validateUser(name, password)
-        if(checkAccount !== true){
-          res.send("error")
-        }
-        
-        const access_token = await this.authService.createToken(req.body)
-        return res.status(HttpStatus.OK).send(access_token)
-        }  
-
-        catch(err){
-          console.log(err)
-          res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err)
-        }
-      }
-
-    //@UseGuards(AuthGuard('jwt'))  
+    @UseGuards(AuthGuard('jwt'))  
     @Post()
     async createUser(@Body() createUserDTO: CreateUserDTO, @Response() res) {
       try{
@@ -91,7 +69,7 @@ import {
   
       }
     }
-    //@UseGuards(AuthGuard('local'))  
+    @UseGuards(AuthGuard('jwt'))  
     @Patch('/:id')
     async updateUser(
       @Response() res,
@@ -101,7 +79,7 @@ import {
       try{
         const isUpdate = await this.userService.updateUser(id, updateUserDTO)
         res.status(HttpStatus.OK).send({
-          status: isUpdate ? 'suecess' : 'fail'
+          status: isUpdate ? 'Updated suecessfully.' : 'Updated failed.'
         })
       }
     
@@ -110,13 +88,13 @@ import {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).send(err)
       }
     }
-    //@UseGuards(AuthGuard('local'))  
+    @UseGuards(AuthGuard('jwt'))  
     @Delete('/:id')
     async deleteUser(@Response() res, @Param('id') id){
       try{
         const isDelete = await this.userService.deleteUser(id)
         res.status(HttpStatus.OK).send({
-          status: isDelete ? 'sucess' : 'fail'
+          status: isDelete ? 'Deleted sucessfully.' : 'Deleted failed.'
         })
       }
   

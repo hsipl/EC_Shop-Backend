@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { IndexModule } from './module';
 import { UserMoudle } from './module/user';
 import { ConfigModule } from '@nestjs/config';
+import { AuthMoudle } from './module/user_auth';
 
 
 @Module({
@@ -25,7 +26,8 @@ import { ConfigModule } from '@nestjs/config';
 
   }), 
   IndexModule,
-  UserMoudle
+  UserMoudle,
+  AuthMoudle
 
 ],
   controllers: [AppController],

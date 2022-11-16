@@ -9,16 +9,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: "secrect",
+      secretOrKey: "secrect"
     });
   }
 
-  async validate(name: string, password: string): Promise<any> {
-    const user = await this.authService.validateUser(name, password);
-    console.log(user)
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-    return user;
+  async validate(payload: any) {
+
+    console.log('Auth was used')
+    return {id: payload.sub, username: payload.username}
   }
 }

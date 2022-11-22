@@ -4,7 +4,7 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
-    Index,
+    Index
 } from 'typeorm';
 
 @Entity("category")

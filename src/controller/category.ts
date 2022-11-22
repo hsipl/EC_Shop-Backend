@@ -5,19 +5,30 @@ import { CategoryService } from 'src/service/category';
 @Controller('category')
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) { }
-
+    /**
+     * 取得分類
+     * @param res 
+     */
     @Get()
     async getAll(@Response() res) {
         const data = await this.categoryService.findAll();
         res.status(HttpStatus.OK).json(data)
     }
-
+    /**
+     * 使用 id 取得分類
+     * @param res 
+     * @param id category id 
+     */
     @Get('/:id')
     async getById(@Response() res, @Param('id') id: number) {
         const data = await this.categoryService.findOne(id);
         res.status(HttpStatus.OK).json(data)
     }
-
+    /**
+     * 新增分類
+     * @param categoryDTO 
+     * @param res 
+     */
     @Post()
     async create(@Body() categoryDTO: CategoryDto, @Response() res) {
         try {
@@ -29,7 +40,11 @@ export class CategoryController {
         }
         res.status(HttpStatus.OK).json()
     }
-
+    /**
+     * 更新分類
+     * @param categoryDTO 
+     * @param res 
+     */
     @Put()
     async update(@Body() categoryDTO: CategoryDto, @Response() res) {
         try {
@@ -39,6 +54,11 @@ export class CategoryController {
             res.status(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    /**
+     * 刪除分類
+     * @param res 
+     * @param id 
+     */
     @Delete('/:id')
     async delete(@Response() res, @Param('id') id: number) {
         try {

@@ -3,12 +3,16 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { IndexModule } from './module';
+import { IndexModule} from './module';
+import { CarouselModule} from './module/carousel';
+
+
+
 
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'mysql',
-    host: 'db',
+    host: '127.0.0.1',
     port: 3306,
     username: 'root',
     password: 'secret',
@@ -16,7 +20,7 @@ import { IndexModule } from './module';
     entities: [join(__dirname, '**', '*.entity.{ts,js}')],
     autoLoadEntities: true,
     synchronize: true,
-  }), IndexModule],
+  }), IndexModule,CarouselModule],
   controllers: [AppController],
   providers: [AppService],
 })

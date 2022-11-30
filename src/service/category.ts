@@ -20,6 +20,7 @@ export class CategoryService {
             for (const category of categorys) {
                 if (_.get(category, 'level') === i){
                     const d = new GetCategoryDto();
+                    
                     Object.assign(d, category);
                     if (isParent) {
                         getData.push(d);
@@ -28,7 +29,8 @@ export class CategoryService {
                         if (_.has(getData[index], 'subCategory')) {
                             getData[index].subCategory.push(d);
                         } else {
-                            _.assign(getData[index], {subCategory:[d]})
+                            // _.assign(getData[index], {subCategory:[d]})
+                            getData[index].subCategory = [d];
                         }
                     }
                 }

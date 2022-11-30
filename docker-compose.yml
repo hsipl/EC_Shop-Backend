@@ -20,25 +20,25 @@ services:
     networks:
       - shop_net
 
-  # backend:
-  #   build: .
-  #   restart: always
-  #   links:
-  #     - db
-  #   ports:
-  #     - 3000:3000
-  #   networks:
-  #     - shop_net
-  #   depends_on:
-  #     - db
-  #   command: sh -c "npm run start:dev"
+  backend:
+    build: .
+    restart: always
+    links:
+      - db
+    ports:
+      - 3000:3000
+    networks:
+      - shop_net
+    depends_on:
+      - db
+    command: sh -c "npm run start:dev"
 
-  #   volumes:
-  #     - backend_data:/ec_shop_backend
+    volumes:
+      - backend_data:/ec_shop_backend
 
 volumes:
   mysql_data:
-  # backend_data:
+  backend_data:
 
 
 networks:

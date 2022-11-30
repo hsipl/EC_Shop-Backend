@@ -8,8 +8,7 @@ import { IndexModule } from './module';
 @Module({
   imports: [TypeOrmModule.forRoot({
     type: 'mysql',
-    // host: 'db',
-    host:'localhost',
+    host: 'db',
     port: 3306,
     username: 'root',
     password: 'secret',

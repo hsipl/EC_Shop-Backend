@@ -4,9 +4,9 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { IndexModule } from './module';
-import { UserMoudle } from './module/user';
+
 import { ConfigModule } from '@nestjs/config';
-import { AuthMoudle } from './module/user_auth';
+
 
 
 @Module({
@@ -26,8 +26,6 @@ import { AuthMoudle } from './module/user_auth';
 
   }), 
   IndexModule,
-  UserMoudle,
-  AuthMoudle
 
 ],
   controllers: [AppController],

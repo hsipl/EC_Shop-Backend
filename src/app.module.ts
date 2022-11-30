@@ -5,18 +5,29 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { IndexModule } from './module';
 
+import { ConfigModule } from '@nestjs/config';
+
+
+
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot({
     type: 'mysql',
-    host: 'db',
+    host: process.env.DATABASE_HOST,
     port: 3306,
-    username: 'root',
-    password: 'secret',
-    database: 'ec_shop',
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_SCHEMA,
     entities: [join(__dirname, '**', '*.entity.{ts,js}')],
     autoLoadEntities: true,
     synchronize: true,
-  }), IndexModule],
+    
+
+  }), 
+  IndexModule,
+
+],
   controllers: [AppController],
   providers: [AppService],
 })

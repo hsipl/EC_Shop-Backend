@@ -1,10 +1,11 @@
 import { Controller, Get, Post, Response, HttpStatus, Param, Body, Delete, Put } from '@nestjs/common';
-import { CategoryDto } from 'src/dto/category';
+import { CreateCategoryDto } from 'src/dto/category/create_category';
 import { CategoryService } from 'src/service/category';
 
 @Controller('category')
 export class CategoryController {
     constructor(private readonly categoryService: CategoryService) { }
+
     /**
      * 取得分類
      * @param res 
@@ -30,7 +31,7 @@ export class CategoryController {
      * @param res 
      */
     @Post()
-    async create(@Body() categoryDTO: CategoryDto, @Response() res) {
+    async create(@Body() categoryDTO: CreateCategoryDto, @Response() res) {
         try {
             await this.categoryService.create(categoryDTO);
             res.status(HttpStatus.OK).json({ status: 'success' });
@@ -40,13 +41,14 @@ export class CategoryController {
         }
         res.status(HttpStatus.OK).json()
     }
+
     /**
      * 更新分類
      * @param categoryDTO 
      * @param res 
      */
     @Put()
-    async update(@Body() categoryDTO: CategoryDto, @Response() res) {
+    async update(@Body() categoryDTO: CreateCategoryDto, @Response() res) {
         try {
             const isUpdate = this.categoryService.update(categoryDTO.id, categoryDTO);
             res.status(HttpStatus.OK).json({ status: isUpdate ? 'success' : 'fail' });
@@ -54,6 +56,7 @@ export class CategoryController {
             res.status(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     /**
      * 刪除分類
      * @param res 
